@@ -7,20 +7,19 @@ public class Joueur {
     private int[] saMain = new int[VAL_MAX_MAIN];
     private int[] saPioche = new int[VAL_MAX_PIOCHE];
 
-    public int[] getsaMain() {
-        return saMain;
-    }
-
-    public void creerCartes(String[] Deck) {
+    public int[] creerCartes(int[] Deck) {
         for(int i = 0; i<60; i++) {
-            Deck[i] = String.format("%02d", i+1);
+            Deck[i] = i;
         }
+        return Deck;
     }
 
-    public void Piocher(String[] Deck, Joueur j, int nombreDePioches) {
+    public int[] Piocher(int[] Deck, Joueur j, int nombreDePioches) {
         for( int a = 0; a < nombreDePioches; a++){
             Random rand = new Random();
-            System.out.println(Deck[rand.nextInt(Deck.length)]);
+            Deck[a] = 2+rand.nextInt(59);
+            System.out.println(String.format("%02d", Deck[a]));
         }
+        return Deck;
     }
 }
