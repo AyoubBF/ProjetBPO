@@ -1,25 +1,61 @@
 package appli;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Joueur {
     private static final int VAL_MAX_MAIN = 6;
-    private static final int VAL_MAX_PIOCHE = 58;
-    private int[] saMain = new int[VAL_MAX_MAIN];
-    private int[] saPioche = new int[VAL_MAX_PIOCHE];
+    private ArrayList<Integer> saMain = new ArrayList<>(VAL_MAX_MAIN);
+    private static String nomJoueur = new String();
+    private ArrayList<Integer> Deck = new ArrayList<>();
+    private int tailleDeck = 58;
 
-    public int[] creerCartes(int[] Deck) {
-        for(int i = 0; i<60; i++) {
-            Deck[i] = i;
+    public Joueur(String nomJoueur){
+        this.nomJoueur = nomJoueur;
+    }
+
+    public ArrayList<Integer> getDeck(){
+        return this.Deck;
+    }
+
+    public ArrayList<Integer> creerCartes(Joueur j) {
+        for(int i = 2; i<60; i++) {
+            j.Deck.add(i);
         }
         return Deck;
     }
 
-    public int[] Piocher(int[] Deck, Joueur j, int nombreDePioches) {
+    public ArrayList<Integer> Piocher(Joueur j, int nombreDePioches) {
         for( int a = 0; a < nombreDePioches; a++){
             Random rand = new Random();
-            Deck[a] = 2+rand.nextInt(59);
-            System.out.println(String.format("%02d", Deck[a]));
+            j.saMain.add(a, Deck.get(2+rand.nextInt(tailleDeck-2)));
+            Deck.remove(j.saMain.get(a));
+            tailleDeck--;
+            System.out.println("taille : "+ tailleDeck);
+           System.out.println(String.format("%02d", j.saMain.get(a)));
         }
         return Deck;
+    }
+
+    private static void décompose(String s) {
+        // une solution
+        String[] tab = s.split("\\s+");
+        for (String mot : tab)
+            System.out.println(mot);
+    }
+    public void Poser(Joueur j, Plateau p){
+        Scanner sc = new Scanner(System.in);
+        String s;
+        System.out.print("> ");
+        s = sc.nextLine();
+        while (!s.equals("fin")) {
+            décompose(s);
+            System.out.print("> ");
+            s = sc.nextLine();
+        }
+//        if(!PoseValide){
+//            System.out.println("erreur de saisie");
+//            return;
+//        }
     }
 }

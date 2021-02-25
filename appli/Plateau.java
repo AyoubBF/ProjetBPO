@@ -1,5 +1,7 @@
 package appli;
 
+import java.util.ArrayList;
+
 public class Plateau {
     private int pileAscNORD;
     private int pileDescNORD;
