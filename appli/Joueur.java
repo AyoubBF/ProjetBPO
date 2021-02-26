@@ -2,6 +2,7 @@ package appli;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Collections;
 
 public class Joueur {
     private static final int VAL_MAX_MAIN = 6;
@@ -49,19 +50,28 @@ public class Joueur {
             Deck.remove(j.saMain.get(a));
             tailleDeck--;
             tailleMain++;
-            System.out.println("tailleMain : "+tailleMain);
            System.out.println(String.format("%02d", j.saMain.get(a)));
         }
         return Deck;
     }
 
+    private static void trierSaMain(Joueur j){
+        Collections.sort(j.saMain);
+        System.out.print("cartes "+j.nomJoueur+" { ");
+        for(int i=0; i<j.tailleMain;i++){
+            System.out.print(String.format("%02d ", j.saMain.get(i)));
+        }
+        System.out.println("}");
+    }
+
     private static void décompose(String s) {
         // une solution
-        String[] tab = s.split("\\s+");
+        String[] tab = s.split("\\s +");
         for (String mot : tab)
-            System.out.println(mot);
+            System.out.print(mot);
     }
     public void Poser(Joueur j, Plateau p){
+        trierSaMain(j);
         Scanner sc = new Scanner(System.in);
         String s;
         System.out.print("> ");

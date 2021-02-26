@@ -6,9 +6,7 @@ public class Application {
         Plateau p = new Plateau();
 
         Joueur NORD = new Joueur("NORD");
-        System.out.println(NORD.getNomJoueur());
         Joueur SUD = new Joueur("SUD");
-        System.out.println(NORD.getNomJoueur());
 
         NORD.creerCartes(NORD);
         SUD.creerCartes(SUD);
