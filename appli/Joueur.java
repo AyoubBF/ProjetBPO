@@ -6,16 +6,33 @@ import java.util.Scanner;
 public class Joueur {
     private static final int VAL_MAX_MAIN = 6;
     private ArrayList<Integer> saMain = new ArrayList<>(VAL_MAX_MAIN);
-    private static String nomJoueur = new String();
+    private String nomJoueur = new String();
     private ArrayList<Integer> Deck = new ArrayList<>();
+    private int tailleMain = 0;
     private int tailleDeck = 58;
 
     public Joueur(String nomJoueur){
         this.nomJoueur = nomJoueur;
     }
 
+    public ArrayList<Integer> getSaMain(){
+        return this.saMain;
+    }
+
     public ArrayList<Integer> getDeck(){
         return this.Deck;
+    }
+
+    public String getNomJoueur() {
+        return this.nomJoueur;
+    }
+
+    public int getTailleMain(){
+        return this.tailleMain;
+    }
+
+    public int getTailleDeck(){
+        return this.tailleDeck;
     }
 
     public ArrayList<Integer> creerCartes(Joueur j) {
@@ -31,7 +48,8 @@ public class Joueur {
             j.saMain.add(a, Deck.get(2+rand.nextInt(tailleDeck-2)));
             Deck.remove(j.saMain.get(a));
             tailleDeck--;
-            System.out.println("taille : "+ tailleDeck);
+            tailleMain++;
+            System.out.println("tailleMain : "+tailleMain);
            System.out.println(String.format("%02d", j.saMain.get(a)));
         }
         return Deck;
