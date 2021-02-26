@@ -7,7 +7,7 @@ import java.util.Collections;
 public class Joueur {
     private static final int VAL_MAX_MAIN = 6;
     private ArrayList<Integer> saMain = new ArrayList<>(VAL_MAX_MAIN);
-    private String nomJoueur = new String();
+    private String nomJoueur;
     private ArrayList<Integer> Deck = new ArrayList<>();
     private int tailleMain = 0;
     private int tailleDeck = 58;
@@ -36,30 +36,30 @@ public class Joueur {
         return this.tailleDeck;
     }
 
-    public ArrayList<Integer> creerCartes(Joueur j) {
+    public ArrayList<Integer> creerCartes() {
         for(int i = 2; i<60; i++) {
-            j.Deck.add(i);
+            this.Deck.add(i);
         }
         return Deck;
     }
 
-    public ArrayList<Integer> Piocher(Joueur j, int nombreDePioches) {
+    public ArrayList<Integer> Piocher(int nombreDePioches) {
         for( int a = 0; a < nombreDePioches; a++){
             Random rand = new Random();
-            j.saMain.add(a, Deck.get(2+rand.nextInt(tailleDeck-2)));
-            Deck.remove(j.saMain.get(a));
+            this.saMain.add(a, Deck.get(2+rand.nextInt(tailleDeck-2)));
+            Deck.remove(this.saMain.get(a));
             tailleDeck--;
             tailleMain++;
-           System.out.println(String.format("%02d", j.saMain.get(a)));
+           System.out.println(String.format("%02d", this.saMain.get(a)));
         }
         return Deck;
     }
 
-    private static void trierSaMain(Joueur j){
-        Collections.sort(j.saMain);
-        System.out.print("cartes "+j.nomJoueur+" { ");
-        for(int i=0; i<j.tailleMain;i++){
-            System.out.print(String.format("%02d ", j.saMain.get(i)));
+    private void trierSaMain(){
+        Collections.sort(this.saMain);
+        System.out.print("cartes "+this.nomJoueur+" { ");
+        for(int i=0; i<this.tailleMain;i++){
+            System.out.print(String.format("%02d ", this.saMain.get(i)));
         }
         System.out.println("}");
     }
@@ -70,8 +70,14 @@ public class Joueur {
         for (String mot : tab)
             System.out.print(mot);
     }
-    public void Poser(Joueur j, Plateau p){
-        trierSaMain(j);
+
+//    public boolean PoseValide(Plateau p, String s){
+//
+//        return true;
+//    }
+
+    public void Poser(Plateau p){
+        trierSaMain();
         Scanner sc = new Scanner(System.in);
         String s;
         System.out.print("> ");

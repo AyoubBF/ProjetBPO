@@ -8,14 +8,14 @@ public class Application {
         Joueur NORD = new Joueur("NORD");
         Joueur SUD = new Joueur("SUD");
 
-        NORD.creerCartes(NORD);
-        SUD.creerCartes(SUD);
+        NORD.creerCartes();
+        SUD.creerCartes();
 
-        NORD.Piocher(NORD,6);
+        NORD.Piocher(6);
         System.out.println("----------------");
-        SUD.Piocher(SUD,6);
+        SUD.Piocher(6);
 
         p.afficherStatutPlateau(NORD, SUD);
-        NORD.Poser(NORD, p);
+        NORD.Poser(p);
     }
 }
