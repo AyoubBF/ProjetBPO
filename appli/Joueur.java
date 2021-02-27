@@ -64,11 +64,25 @@ public class Joueur {
         System.out.println("}");
     }
 
-    private static void décompose(String s) {
-        // une solution
-        String[] tab = s.split("\\s +");
+    public boolean PoseValideNORDASC(Plateau p, String s){
+        if(saMain.contains(s) || Integer.parseInt(s) > p.getPileAscNORD() || Integer.parseInt(s) == (p.getPileAscNORD() - 10)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean PoseValideNORDDESC(Plateau p, String s){
+        if(saMain.contains(s) || Integer.parseInt(s) < p.getPileAscNORD() || Integer.parseInt(s) == (p.getPileAscNORD() + 10)){
+            return true;
+        }
+        return false;
+    }
+
+    private static String[] décompose(String s, String[] tab) {
+        tab = s.split("\\s+");
         for (String mot : tab)
-            System.out.print(mot);
+            System.out.print(mot+" ");
+        return tab;
     }
 
 //    public boolean PoseValide(Plateau p, String s){
@@ -82,8 +96,10 @@ public class Joueur {
         String s;
         System.out.print("> ");
         s = sc.nextLine();
+        String[] cartesSelectionnes = new String[6];
         while (!s.equals("fin")) {
-            décompose(s);
+            décompose(s, cartesSelectionnes);
+            System.out.println();
             System.out.print("> ");
             s = sc.nextLine();
         }
