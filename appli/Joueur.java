@@ -78,11 +78,15 @@ public class Joueur {
         return false;
     }
 
-    private static String[] décompose(String s, String[] tab) {
+    private static void décompose(String s, String[] tab) {
         tab = s.split("\\s+");
+        int a = tab.length;
+        if(a > 6 || a == 0){
+            return;
+        }
         for (String mot : tab)
             System.out.print(mot+" ");
-        return tab;
+        System.out.println();
     }
 
 //    public boolean PoseValide(Plateau p, String s){
@@ -99,8 +103,7 @@ public class Joueur {
         String[] cartesSelectionnes = new String[6];
         while (!s.equals("fin")) {
             décompose(s, cartesSelectionnes);
-            System.out.println();
-            System.out.print("> ");
+            System.out.print("#> ");
             s = sc.nextLine();
         }
 //        if(!PoseValide){
