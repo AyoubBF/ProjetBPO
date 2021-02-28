@@ -64,35 +64,65 @@ public class Joueur {
         System.out.println("}");
     }
 
-    public boolean PoseValideNORDASC(Plateau p, String s){
-        if(saMain.contains(s) || Integer.parseInt(s) > p.getPileAscNORD() || Integer.parseInt(s) == (p.getPileAscNORD() - 10)){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean PoseValideNORDDESC(Plateau p, String s){
-        if(saMain.contains(s) || Integer.parseInt(s) < p.getPileAscNORD() || Integer.parseInt(s) == (p.getPileAscNORD() + 10)){
-            return true;
-        }
-        return false;
-    }
-
-    private static void décompose(String s, String[] tab) {
-        tab = s.split("\\s+");
-        int a = tab.length;
-        if(a > 6 || a == 0){
-            return;
-        }
-        for (String mot : tab)
-            System.out.print(mot+" ");
-        System.out.println();
-    }
-
-//    public boolean PoseValide(Plateau p, String s){
-//
-//        return true;
+//    public boolean PoseValideNORDASC(Plateau p, String s){
+//        if(saMain.contains(s) || Integer.parseInt(s) > p.getPileAscNORD() || Integer.parseInt(s) == (p.getPileAscNORD() - 10)){
+//            return true;
+//        }
+//        return false;
 //    }
+//
+//    public boolean PoseValideNORDDESC(Plateau p, String s){
+//        if(saMain.contains(s) || Integer.parseInt(s) < p.getPileAscNORD() || Integer.parseInt(s) == (p.getPileAscNORD() + 10)){
+//            return true;
+//        }
+//        return false;
+//    }
+    public static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    private static boolean formatValide(String[] cartesSelectionnes) {
+        for (String carte : cartesSelectionnes) {
+            if (carte.length() <= 2)
+//                return false;
+
+            if (carte.length() == 3) {
+                if (isNumeric(carte.substring(0, 2))) {
+                    if (carte.substring(2, 3).matches("\\^") || carte.substring(2, 3).matches("v")) {
+//                        return true; // ici c'est faux pcq il faut que ce soit true pour tous les éléments (ici dès que un élément return true ça compte comme si tout était true)
+                    }
+                }
+            }
+            if (carte.length() == 4) {
+                if (isNumeric(carte.substring(0, 2))) {
+                    if (carte.substring(2, 3).matches("\\^") || carte.substring(2, 3).matches("v")) {
+                        if (carte.substring(3, 4).matches("'")) {
+//                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static int décompose(String s, String[] cartesSelectionnes) {
+        cartesSelectionnes = s.split("\\s+");
+        int nombreDeCartes = cartesSelectionnes.length;
+        if(nombreDeCartes > 6 || nombreDeCartes == 0){
+            return -1;
+        }
+        if(formatValide(cartesSelectionnes)){
+                System.out.println("X cartes posées, X cartes piochées");
+        }
+        return nombreDeCartes;
+    }
 
     public void Poser(Plateau p){
         trierSaMain();
@@ -102,13 +132,9 @@ public class Joueur {
         s = sc.nextLine();
         String[] cartesSelectionnes = new String[6];
         while (!s.equals("fin")) {
-            décompose(s, cartesSelectionnes);
+            int nombreDeCartes = décompose(s, cartesSelectionnes);
             System.out.print("#> ");
             s = sc.nextLine();
         }
-//        if(!PoseValide){
-//            System.out.println("erreur de saisie");
-//            return;
-//        }
     }
 }
