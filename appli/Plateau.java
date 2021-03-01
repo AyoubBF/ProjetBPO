@@ -37,6 +37,20 @@ public class Plateau {
         return false;
     }
 
+    public boolean poseValideAscSUD(String s){
+        if(Integer.parseInt(s) > this.pileAscSUD || Integer.parseInt(s) == (this.pileAscSUD - 10)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean poseValideDescSUD(String s){
+        if(Integer.parseInt(s) < this.pileDescSUD || Integer.parseInt(s) == (this.pileDescSUD + 10)){
+            return true;
+        }
+        return false;
+    }
+
     public void afficherStatutPlateau(Joueur j1, Joueur j2){
         System.out.println(j1.getNomJoueur()+" ^["+this.pileAscNORD+"] v["+this.pileDescNORD+"] (m"+j1.getTailleMain()+"p"+j1.getTailleDeck()+")");
         System.out.println(j2.getNomJoueur()+"  ^["+this.pileAscSUD+"] v["+this.pileDescSUD+"] (m"+j2.getTailleMain()+"p"+j2.getTailleDeck()+")");

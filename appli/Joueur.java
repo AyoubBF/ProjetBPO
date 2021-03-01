@@ -75,8 +75,23 @@ public class Joueur {
         }
     }
 
-    private boolean formatValide(String[] cartesSelectionnes, int nombreDeCartes) {
+//    private int validePoseAsc(String carte, String[] cartesSelectionnes, Plateau p){
+//        if(this.nomJoueur == "NORD"){
+//            if(!p.poseValideAscNORD(carte.substring(0,2))) {
+//                return false;
+//            }
+//            cartesValides++;
+//        }else{
+//            if(!p.poseValideAscSUD(carte.substring(0,2))){
+//                return false;
+//            }
+//            cartesValides++;
+//        }
+//    }
+
+    private boolean verifierSelection(String[] cartesSelectionnes, int nombreDeCartes, Plateau p) {
         int cartesValides = 0;
+        int limitePoseEnnemie = 0;
         for (String carte : cartesSelectionnes) {
             if (carte.length() <= 2) {return false;}
 
@@ -84,34 +99,66 @@ public class Joueur {
                 if (isNumeric(carte.substring(0, 2)) && this.saMain.contains(Integer.parseInt(carte.substring(0, 2)))) {
                     if (carte.substring(2, 3).matches("\\^")) {
                         if(this.nomJoueur == "NORD"){
-                            if(!poseValideAscNORD(carte.substring(0,2))) {
+                            if(!p.poseValideAscNORD(carte.substring(0,2))) {
                                 return false;
                             }
                             cartesValides++;
                         }else{
-                            if(!poseValideDescNORD()){
+                            if(!p.poseValideAscSUD(carte.substring(0,2))){
                                 return false;
                             }
                             cartesValides++;
                         }
-
                     }
                     if (carte.substring(2, 3).matches("v")) {
-                        if(!poseValideDescNORD()){
-                            return false;
+                        if(this.nomJoueur == "NORD"){
+                            if(!p.poseValideDescNORD(carte.substring(0,2))) {
+                                return false;
+                            }
+                            cartesValides++;
+                        }else{
+                            if(!p.poseValideDescSUD(carte.substring(0,2))){
+                                return false;
+                            }
+                            cartesValides++;
                         }
-                        cartesValides++;
                     }
                 }
             }
             if (carte.length() == 4) {
                 if (isNumeric(carte.substring(0, 2)) && this.saMain.contains(Integer.parseInt(carte.substring(0, 2)))) {
-                    if (carte.substring(2, 3).matches("\\^") || carte.substring(2, 3).matches("v")) {
+                    if (carte.substring(2, 3).matches("\\^")) {
                         if (carte.substring(3, 4).matches("'")) {
-//                            if(!poseValide()){
-//                                return false;
-//                            }
-                            cartesValides++;
+                            if(this.nomJoueur == "NORD"){
+                                if(!p.poseValideAscNORD(carte.substring(0,2))) {
+                                    return false;
+                                }
+                                cartesValides++;
+                            }else{
+                                if(!p.poseValideAscSUD(carte.substring(0,2))){
+                                    return false;
+                                }
+                                cartesValides++;
+                            }
+                        }
+                    }
+                    if (carte.substring(2, 3).matches("v")) {
+                        if (carte.substring(3, 4).matches("'")) {
+                            if(this.nomJoueur == "NORD"){
+                                if(!p.poseValideDescNORD(carte.substring(0,2))) {
+                                    return false;
+                                }
+                                cartesValides++;
+                            }else{
+                                if(!p.poseValideDescSUD(carte.substring(0,2))){
+                                    return false;
+                                }
+                                cartesValides++;
+                                limitePoseEnnemie++;
+                                if(limitePoseEnnemie > 1){
+                                    return false;
+                                }
+                            }
                         }
                     }
                 }
@@ -123,13 +170,13 @@ public class Joueur {
         return false;
     }
 
-    private int décompose(String s, String[] cartesSelectionnes) {
+    private int décompose(String s, String[] cartesSelectionnes, Plateau p) {
         cartesSelectionnes = s.split("\\s+");
         int nombreDeCartes = cartesSelectionnes.length;
         if(nombreDeCartes > 6 || nombreDeCartes == 0){
             return -1;
         }
-        if(this.formatValide(cartesSelectionnes, nombreDeCartes)){
+        if(this.verifierSelection(cartesSelectionnes, nombreDeCartes, p)){
                 System.out.println("X cartes posées, X cartes piochées");
         }
         return nombreDeCartes;
@@ -143,7 +190,7 @@ public class Joueur {
         s = sc.nextLine();
         String[] cartesSelectionnes = new String[6];
         while (!s.equals("fin")) {
-            décompose(s, cartesSelectionnes);
+            décompose(s, cartesSelectionnes, p);
             System.out.print("#> ");
             s = sc.nextLine();
         }
