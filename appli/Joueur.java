@@ -55,6 +55,30 @@ public class Joueur {
         return Deck;
     }
 
+    public void retirerCartes(String[] cartesSelectionnes){
+        for (String carte : cartesSelectionnes) {
+            for (int i = 0; i<saMain.size();i++) {
+                if(saMain.get(i) == Integer.parseInt(carte.substring(0, 2))){
+                    saMain.remove(i);
+                }
+            }
+        }
+    }
+
+    public boolean comparerAvecCarteAscPrecedente(String carteActuelle, int cartePrecedente){
+        if(Integer.parseInt(carteActuelle.substring(0, 2)) > cartePrecedente) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean comparerAvecCarteDescPrecedente(String carteActuelle, int cartePrecedente){
+        if(Integer.parseInt(carteActuelle.substring(0, 2)) < cartePrecedente) {
+            return true;
+        }
+        return false;
+    }
+
     public void trierSaMain(){
         Collections.sort(this.saMain);
         System.out.print("cartes "+this.nomJoueur+" { ");
@@ -75,26 +99,27 @@ public class Joueur {
         }
     }
 
-//    private int validePoseAsc(String carte, String[] cartesSelectionnes, Plateau p){
-//        if(this.nomJoueur == "NORD"){
-//            if(!p.poseValideAscNORD(carte.substring(0,2))) {
-//                return false;
-//            }
-//            cartesValides++;
-//        }else{
-//            if(!p.poseValideAscSUD(carte.substring(0,2))){
-//                return false;
-//            }
-//            cartesValides++;
-//        }
-//    }
-
     private boolean verifierSelection(String[] cartesSelectionnes, int nombreDeCartes, Plateau p) {
         int cartesValides = 0;
         int limitePoseEnnemie = 0;
+        int carteAscPrecedente;
+        int carteDescPrecedente;
+        int carteAscEnmPrecedente;
+        int carteDescEnmPrecedente;
+        if(this.nomJoueur == "NORD"){
+            carteAscPrecedente = p.getPileAscNORD();
+            carteDescPrecedente = p.getPileDescNORD();
+            carteAscEnmPrecedente = p.getPileAscSUD();
+            carteDescEnmPrecedente = p.getPileDescSUD();
+        }else{
+            carteAscPrecedente = p.getPileAscSUD();
+            carteDescPrecedente = p.getPileDescSUD();
+            carteAscEnmPrecedente = p.getPileAscNORD();
+            carteDescEnmPrecedente = p.getPileDescNORD();
+        }
+
         for (String carte : cartesSelectionnes) {
             if (carte.length() <= 2) {return false;}
-
             if (carte.length() == 3) {
                 if (isNumeric(carte.substring(0, 2)) && this.saMain.contains(Integer.parseInt(carte.substring(0, 2)))) {
                     if (carte.substring(2, 3).matches("\\^")) {
@@ -102,12 +127,18 @@ public class Joueur {
                             if(!p.poseValideAscNORD(carte.substring(0,2))) {
                                 return false;
                             }
-                            cartesValides++;
+                            if (comparerAvecCarteAscPrecedente(carte, carteAscPrecedente)) {
+                                carteAscPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                cartesValides++;
+                            }
                         }else{
                             if(!p.poseValideAscSUD(carte.substring(0,2))){
                                 return false;
                             }
-                            cartesValides++;
+                            if(comparerAvecCarteAscPrecedente(carte, carteAscPrecedente)) {
+                                carteAscPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                cartesValides++;
+                            }
                         }
                     }
                     if (carte.substring(2, 3).matches("v")) {
@@ -115,12 +146,18 @@ public class Joueur {
                             if(!p.poseValideDescNORD(carte.substring(0,2))) {
                                 return false;
                             }
-                            cartesValides++;
+                            if(comparerAvecCarteDescPrecedente(carte, carteDescPrecedente)) {
+                                carteDescPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                cartesValides++;
+                            }
                         }else{
                             if(!p.poseValideDescSUD(carte.substring(0,2))){
                                 return false;
                             }
-                            cartesValides++;
+                            if(comparerAvecCarteDescPrecedente(carte, carteDescPrecedente)) {
+                                carteDescPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                cartesValides++;
+                            }
                         }
                     }
                 }
@@ -133,12 +170,22 @@ public class Joueur {
                                 if(!p.poseValideAscNORD(carte.substring(0,2))) {
                                     return false;
                                 }
-                                cartesValides++;
+                                if(comparerAvecCarteAscPrecedente(carte, carteAscEnmPrecedente)) {
+                                    carteAscEnmPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                    cartesValides++;
+                                }
                             }else{
                                 if(!p.poseValideAscSUD(carte.substring(0,2))){
                                     return false;
                                 }
-                                cartesValides++;
+                                if(comparerAvecCarteAscPrecedente(carte, carteAscEnmPrecedente)) {
+                                    carteAscEnmPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                    cartesValides++;
+                                }
+                            }
+                            limitePoseEnnemie++;
+                            if(limitePoseEnnemie > 1){
+                                return false;
                             }
                         }
                     }
@@ -148,24 +195,40 @@ public class Joueur {
                                 if(!p.poseValideDescNORD(carte.substring(0,2))) {
                                     return false;
                                 }
-                                cartesValides++;
+                                if(comparerAvecCarteDescPrecedente(carte, carteDescEnmPrecedente)) {
+                                    carteDescEnmPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                    cartesValides++;
+                                }
                             }else{
                                 if(!p.poseValideDescSUD(carte.substring(0,2))){
                                     return false;
                                 }
-                                cartesValides++;
-                                limitePoseEnnemie++;
-                                if(limitePoseEnnemie > 1){
-                                    return false;
+                                if(comparerAvecCarteDescPrecedente(carte, carteDescEnmPrecedente)) {
+                                    carteDescEnmPrecedente = Integer.parseInt(carte.substring(0, 2));
+                                    cartesValides++;
                                 }
+                            }
+                            limitePoseEnnemie++;
+                            if(limitePoseEnnemie > 1){
+                                return false;
                             }
                         }
                     }
                 }
             }
         }
+        System.out.println("nombre de cartes valides : "+cartesValides);
+        System.out.println("nombre de cartes : "+nombreDeCartes);
+        System.out.println(carteAscPrecedente +" "+ carteDescPrecedente +" "+ carteAscEnmPrecedente +" "+ carteDescEnmPrecedente);
         if(cartesValides == nombreDeCartes) {
-                return true;
+            if(this.nomJoueur == "NORD") {
+                p.miseAJourValeursPlateauVueNORD(carteAscPrecedente, carteDescPrecedente, carteAscEnmPrecedente, carteDescEnmPrecedente);
+                retirerCartes(cartesSelectionnes);
+            }else{
+                p.miseAJourValeursPlateauVueSUD(carteAscPrecedente, carteDescPrecedente, carteAscEnmPrecedente, carteDescEnmPrecedente);
+                retirerCartes(cartesSelectionnes);
+            }
+            return true;
         }
         return false;
     }
@@ -178,6 +241,9 @@ public class Joueur {
         }
         if(this.verifierSelection(cartesSelectionnes, nombreDeCartes, p)){
                 System.out.println("X cartes posées, X cartes piochées");
+            for( int a = 0; a < saMain.size(); a++){
+                System.out.print(String.format("%02d ", this.saMain.get(a)));
+            }
         }
         return nombreDeCartes;
     }

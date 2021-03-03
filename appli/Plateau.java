@@ -23,6 +23,14 @@ public class Plateau {
         return this.pileDescNORD;
     }
 
+    public int getPileAscSUD(){
+        return this.pileAscSUD;
+    }
+
+    public int getPileDescSUD(){
+        return this.pileDescSUD;
+    }
+
     public boolean poseValideAscNORD(String s){
         if(Integer.parseInt(s) > this.pileAscNORD || Integer.parseInt(s) == (this.pileAscNORD - 10)){
             return true;
@@ -54,5 +62,19 @@ public class Plateau {
     public void afficherStatutPlateau(Joueur j1, Joueur j2){
         System.out.println(j1.getNomJoueur()+" ^["+this.pileAscNORD+"] v["+this.pileDescNORD+"] (m"+j1.getTailleMain()+"p"+j1.getTailleDeck()+")");
         System.out.println(j2.getNomJoueur()+"  ^["+this.pileAscSUD+"] v["+this.pileDescSUD+"] (m"+j2.getTailleMain()+"p"+j2.getTailleDeck()+")");
+    }
+
+    public void miseAJourValeursPlateauVueNORD(int carteAscPrecedente, int carteDescPrecedente, int carteAscEnmPrecedente, int carteDescEnmPrecedente){
+        this.pileAscNORD = carteAscPrecedente;
+        this.pileDescNORD = carteDescPrecedente;
+        this.pileAscSUD = carteAscEnmPrecedente;
+        this.pileDescSUD = carteDescEnmPrecedente;
+    }
+
+    public void miseAJourValeursPlateauVueSUD(int carteAscPrecedente, int carteDescPrecedente, int carteAscEnmPrecedente, int carteDescEnmPrecedente){
+        this.pileAscNORD = carteAscEnmPrecedente;
+        this.pileDescNORD = carteDescEnmPrecedente;
+        this.pileAscSUD = carteAscPrecedente;
+        this.pileDescSUD = carteDescPrecedente;
     }
 }
