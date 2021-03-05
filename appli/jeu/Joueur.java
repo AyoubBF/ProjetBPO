@@ -1,4 +1,5 @@
-package appli;
+package appli.jeu;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ public class Joueur {
     private ArrayList<Integer> Deck = new ArrayList<>();
     private int tailleMain = 0;
     private int tailleDeck = 58;
+    private int nombreDeCartesPiochees = 0;
 
     public Joueur(String nomJoueur){
         this.nomJoueur = nomJoueur;
@@ -50,7 +52,7 @@ public class Joueur {
             Deck.remove(this.saMain.get(a));
             tailleDeck--;
             tailleMain++;
-           System.out.println(String.format("%02d", this.saMain.get(a)));
+            nombreDeCartesPiochees = nombreDePioches;
         }
         return Deck;
     }
@@ -60,6 +62,7 @@ public class Joueur {
             for (int i = 0; i<saMain.size();i++) {
                 if(saMain.get(i) == Integer.parseInt(carte.substring(0, 2))){
                     saMain.remove(i);
+                    tailleMain--;
                 }
             }
         }
@@ -106,6 +109,9 @@ public class Joueur {
         int carteDescPrecedente;
         int carteAscEnmPrecedente;
         int carteDescEnmPrecedente;
+        if(nombreDeCartes < 2){
+            return false;
+        }
         if(this.nomJoueur == "NORD"){
             carteAscPrecedente = p.getPileAscNORD();
             carteDescPrecedente = p.getPileDescNORD();
@@ -217,9 +223,6 @@ public class Joueur {
                 }
             }
         }
-        System.out.println("nombre de cartes valides : "+cartesValides);
-        System.out.println("nombre de cartes : "+nombreDeCartes);
-        System.out.println(carteAscPrecedente +" "+ carteDescPrecedente +" "+ carteAscEnmPrecedente +" "+ carteDescEnmPrecedente);
         if(cartesValides == nombreDeCartes) {
             if(this.nomJoueur == "NORD") {
                 p.miseAJourValeursPlateauVueNORD(carteAscPrecedente, carteDescPrecedente, carteAscEnmPrecedente, carteDescEnmPrecedente);
@@ -228,35 +231,60 @@ public class Joueur {
                 p.miseAJourValeursPlateauVueSUD(carteAscPrecedente, carteDescPrecedente, carteAscEnmPrecedente, carteDescEnmPrecedente);
                 retirerCartes(cartesSelectionnes);
             }
+            if(limitePoseEnnemie == 0) {
+                if(saMain.size() == 5){
+                    Piocher(1);
+                }else{
+                    Piocher(2);
+                }
+            }
+            if(limitePoseEnnemie == 1){
+                Piocher(6 - saMain.size());
+            }
             return true;
         }
         return false;
     }
 
-    private int décompose(String s, String[] cartesSelectionnes, Plateau p) {
+    private boolean peutJouer(Plateau p){
+        for(int i = 0; i<saMain.size(); i++){
+            int cartesJouables = 0;
+            if(saMain.get(i) > p.getPileAscNORD() || saMain.get(i) > p.getPileAscSUD() || saMain.get(i) < p.getPileDescNORD() || saMain.get(i) < p.getPileDescSUD()){
+                cartesJouables++;
+            }
+            if(cartesJouables == 2){return true;}
+        }
+        return false;
+    }
+
+    private boolean décompose(String s, String[] cartesSelectionnes, Plateau p) {
         cartesSelectionnes = s.split("\\s+");
         int nombreDeCartes = cartesSelectionnes.length;
         if(nombreDeCartes > 6 || nombreDeCartes == 0){
-            return -1;
+            return false;
         }
         if(this.verifierSelection(cartesSelectionnes, nombreDeCartes, p)){
-                System.out.println("X cartes posées, X cartes piochées");
-            for( int a = 0; a < saMain.size(); a++){
-                System.out.print(String.format("%02d ", this.saMain.get(a)));
-            }
+            System.out.println(nombreDeCartes+" cartes posées, "+nombreDeCartesPiochees+" cartes piochées");
+            return true;
         }
-        return nombreDeCartes;
+        return false;
     }
 
-    public void Poser(Plateau p){
+    public void Poser(Plateau p, Partie partie){
         trierSaMain();
+        if(!peutJouer(p)){
+            partie.PartieFinie(this);
+        }
         Scanner sc = new Scanner(System.in);
         String s;
         System.out.print("> ");
         s = sc.nextLine();
         String[] cartesSelectionnes = new String[6];
         while (!s.equals("fin")) {
-            décompose(s, cartesSelectionnes, p);
+            nombreDeCartesPiochees = 0;
+            if(décompose(s, cartesSelectionnes, p)){
+                return;
+            }
             System.out.print("#> ");
             s = sc.nextLine();
         }

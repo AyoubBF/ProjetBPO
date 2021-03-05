@@ -1,6 +1,4 @@
-package appli;
-
-import java.util.ArrayList;
+package appli.jeu;
 
 public class Plateau {
     private int pileAscNORD;
