@@ -102,7 +102,7 @@ public class Joueur {
         }
     }
 
-    private boolean verifierSelection(String[] cartesSelectionnes, int nombreDeCartes, Plateau p) {
+    private boolean verifierSelection(String[] cartesSelectionnes, int nombreDeCartes, Plateau p, Partie partie) {
         int cartesValides = 0;
         int limitePoseEnnemie = 0;
         int carteAscPrecedente;
@@ -233,8 +233,10 @@ public class Joueur {
             }
             if(limitePoseEnnemie == 0) {
                 if(saMain.size() == 5){
+                    partie.Vainqueur(this);
                     Piocher(1);
                 }else{
+                    partie.Vainqueur(this);
                     Piocher(2);
                 }
             }
@@ -257,13 +259,13 @@ public class Joueur {
         return false;
     }
 
-    private boolean décompose(String s, String[] cartesSelectionnes, Plateau p) {
+    private boolean décompose(String s, String[] cartesSelectionnes, Plateau p, Partie partie) {
         cartesSelectionnes = s.split("\\s+");
         int nombreDeCartes = cartesSelectionnes.length;
         if(nombreDeCartes > 6 || nombreDeCartes == 0){
             return false;
         }
-        if(this.verifierSelection(cartesSelectionnes, nombreDeCartes, p)){
+        if(this.verifierSelection(cartesSelectionnes, nombreDeCartes, p, partie)){
             System.out.println(nombreDeCartes+" cartes posées, "+nombreDeCartesPiochees+" cartes piochées");
             return true;
         }
@@ -272,6 +274,7 @@ public class Joueur {
 
     public void Poser(Plateau p, Partie partie){
         trierSaMain();
+        int boucleInfinie = 0;
         if(!peutJouer(p)){
             partie.PartieFinie(this);
         }
@@ -280,9 +283,9 @@ public class Joueur {
         System.out.print("> ");
         s = sc.nextLine();
         String[] cartesSelectionnes = new String[6];
-        while (!s.equals("fin")) {
+        while (boucleInfinie == 0) {
             nombreDeCartesPiochees = 0;
-            if(décompose(s, cartesSelectionnes, p)){
+            if(décompose(s, cartesSelectionnes, p, partie)){
                 return;
             }
             System.out.print("#> ");
