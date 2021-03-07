@@ -17,11 +17,11 @@ public class Application {
         NORD.Piocher(6);
         SUD.Piocher(6);
 
-//        while() {
+        while(!partie.Vainqueur(NORD) || !partie.Vainqueur(SUD)) {
             p.afficherStatutPlateau(NORD, SUD);
             NORD.Poser(p, partie);
             p.afficherStatutPlateau(NORD, SUD);
             SUD.Poser(p, partie);
-//        }
+        }
     }
 }
