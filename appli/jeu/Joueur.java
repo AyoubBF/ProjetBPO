@@ -249,12 +249,14 @@ public class Joueur {
     }
 
     private boolean peutJouer(Plateau p){
+        int cartesJouables = 0;
         for(int i = 0; i<saMain.size(); i++){
-            int cartesJouables = 0;
             if(saMain.get(i) > p.getPileAscNORD() || saMain.get(i) > p.getPileAscSUD() || saMain.get(i) < p.getPileDescNORD() || saMain.get(i) < p.getPileDescSUD()){
                 cartesJouables++;
             }
-            if(cartesJouables == 2){return true;}
+            if(cartesJouables >= 2){
+                return true;
+            }
         }
         return false;
     }
