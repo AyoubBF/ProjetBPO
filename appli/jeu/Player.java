@@ -8,36 +8,55 @@ public class Player {
     private Deck deck;
     private Hand hand;
 
-    public Player(String name){
+    public Player(String name) {
         this.name = name;
         this.deck = new Deck();
         this.deck.initialize();
         this.hand = new Hand();
     }
 
-    public void draw(int number){
-        for( int i = 0; i < number; i++) {
+    public void draw(int number) {
+        for (int i = 0; i < number; i++) {
             hand.add(deck.get(i));
             deck.remove(i);
         }
         Collections.sort(this.hand);
     }
 
-    public void playCard(int cardValue, Pile target){
+    public boolean checkIfCanPlay(Hand hand, Board board) {
+        boolean canPlay = true;
+        int playableCards = 0;
+
+        if (hand.size() == 1) {
+            canPlay = false;
+        }
+
+        for (int card : hand) {
+            if (Rules.isPlayable(card, board)) {
+                playableCards++;
+            }
+            if (playableCards >= 2) {
+                return canPlay;
+            }
+        }
+        return canPlay;
+    }
+
+    public void playCard(int cardValue, Pile target) {
         int cardIndex = hand.indexOf(cardValue);
         hand.remove(cardIndex);
         target.setActualValue(cardValue);
     }
 
-    public Deck getDeck(){
+    public Deck getDeck() {
         return this.deck;
     }
 
-    public Hand getHand(){
+    public Hand getHand() {
         return this.hand;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

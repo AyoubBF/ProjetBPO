@@ -1,16 +1,26 @@
 package appli.jeu;
 
 public class Rules {
-    public static boolean isValid(int cardValue, Pile target){
+    public static boolean checkIfValid(int cardValue, Pile target, boolean isEnemyMove){
         String direction = target.getDirection();
         int actualValue = target.getActualValue();
 
-        if(direction == "asc"){
-            if(cardValue > actualValue || cardValue == actualValue - 10)
-                return true;
+        if(isEnemyMove){
+            if(direction == "asc"){
+                if(cardValue < actualValue || cardValue == actualValue + 10)
+                    return true;
+            }else{
+                if(cardValue > actualValue || cardValue == actualValue - 10)
+                    return true;
+            }
         }else{
-            if(cardValue < actualValue || cardValue == actualValue + 10)
-                return true;
+            if(direction == "asc"){
+                if(cardValue > actualValue || cardValue == actualValue - 10)
+                    return true;
+            }else{
+                if(cardValue < actualValue || cardValue == actualValue + 10)
+                    return true;
+            }
         }
         return false;
     }
@@ -40,5 +50,10 @@ public class Rules {
     public static int requiredDraws(String[] selectionnedCards, Hand hand){
         int cardsToDraw = 6 - hand.size();
         return containsEnemyMove(selectionnedCards) ? cardsToDraw : 2;
+    }
+
+    public static boolean isPlayable(int card, Board board){
+        boolean isValid = true;
+        return isValid;
     }
 }
