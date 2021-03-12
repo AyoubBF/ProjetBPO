@@ -1,13 +1,13 @@
-package jeu;
+package game;
 
-import Rules.Rules;
+import rules.Rules;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Player {
     private String name;
-    private Deck deck;
+    private ArrayList<Integer> deck;
     private ArrayList<Integer> hand;
 
     /**
@@ -16,9 +16,7 @@ public class Player {
      */
     public Player(String name) {
         this.name = name;
-        this.deck = new Deck();
-        deck.initialize();
-        this.deck.initialize();
+        this.deck = initializeDeck();
         this.hand = new ArrayList<Integer>();
     }
 
@@ -37,11 +35,13 @@ public class Player {
     /**
      * @brief initialise un deck de 60 cartes
      */
-    public void initialize() {
+    public ArrayList<Integer> initializeDeck() {
+        ArrayList<Integer> deck = new ArrayList<>();
         for (int i = 2; i < 60; i++) {
             deck.add(i);
         }
-        Collections.shuffle(this.deck);
+        Collections.shuffle(deck);
+        return deck;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Player {
      * @brief permet d'obtenir le deck du joueur
      * @return le Deck du joueur
      */
-    public Deck getDeck() {
+    public ArrayList<Integer> getDeck() {
         return this.deck;
     }
 

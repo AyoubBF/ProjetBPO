@@ -1,10 +1,9 @@
-package Test;
+package test;
 
 import static org.junit.Assert.*;
 
-import jeu.Board;
-import jeu.Deck;
-import jeu.Player;
+import game.Board;
+import game.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class TestPlayer {
     public void testCheckIfFinished(){
         Player player = new Player("NORD");
         ArrayList<Integer> hand = new ArrayList<Integer>();
-        Deck deck = new Deck();
+        ArrayList<Integer> deck = new ArrayList<Integer>();
         hand.add(12);
         deck.add(15);
         assertFalse(player.checkIfFinished());

@@ -1,8 +1,8 @@
 package appli;
 
-import Rules.Input;
-import Rules.Rules;
-import jeu.*;
+import rules.Input;
+import rules.Rules;
+import game.*;
 
 import java.util.Scanner;
 

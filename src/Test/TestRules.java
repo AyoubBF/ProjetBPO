@@ -1,9 +1,9 @@
-package Test;
+package test;
 
 import static org.junit.Assert.*;
 
-import Rules.Rules;
-import jeu.*;
+import rules.Rules;
+import game.*;
 import org.junit.Test;
 
 import java.util.ArrayList;

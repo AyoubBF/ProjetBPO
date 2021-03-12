@@ -1,4 +1,4 @@
-package jeu;
+package game;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,8 @@ public class Game {
     private Player sud;
     private ArrayList<Integer> nordHand;
     private ArrayList<Integer> sudHand;
-    private Deck nordDeck;
-    private Deck sudDeck;
+    private ArrayList<Integer> nordDeck;
+    private ArrayList<Integer> sudDeck;
 
     /**
      * @brief Constructeur pour les joueurs, leurs decks, leurs mains et

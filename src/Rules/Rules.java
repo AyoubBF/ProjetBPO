@@ -1,8 +1,8 @@
-package Rules;
+package rules;
 
-import jeu.Board;
-import jeu.Pile;
-import jeu.Player;
+import game.Board;
+import game.Pile;
+import game.Player;
 
 import java.util.ArrayList;
 

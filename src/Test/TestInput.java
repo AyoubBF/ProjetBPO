@@ -1,8 +1,8 @@
-package Test;
+package test;
 
 import static org.junit.Assert.*;
 
-import Rules.Input;
+import rules.Input;
 import org.junit.Test;
 
 import java.util.ArrayList;
