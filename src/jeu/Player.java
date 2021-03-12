@@ -1,11 +1,14 @@
-package appli.jeu;
+package jeu;
 
+import Rules.Rules;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class Player {
     private String name;
     private Deck deck;
-    private Hand hand;
+    private ArrayList<Integer> hand;
 
     /**
      * @brief Constructeur initialisant les attributs d'un joueur (son nom, sa main et son deck)
@@ -14,8 +17,9 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.deck = new Deck();
+        deck.initialize();
         this.deck.initialize();
-        this.hand = new Hand();
+        this.hand = new ArrayList<Integer>();
     }
 
     /**
@@ -31,13 +35,23 @@ public class Player {
     }
 
     /**
+     * @brief initialise un deck de 60 cartes
+     */
+    public void initialize() {
+        for (int i = 2; i < 60; i++) {
+            deck.add(i);
+        }
+        Collections.shuffle(this.deck);
+    }
+
+    /**
      * @brief permet de vérifier si un joueur peut jouer au minimum deux cartes avant de le
      * laisser saisir sa chaîne de caractère
      * @param hand la main du joueur
      * @param board le plateau de jeu
      * @return true si le joueur peut jouer
      */
-    public boolean checkIfCanPlay(Hand hand, Board board, Player player) {
+    public boolean checkIfCanPlay(ArrayList<Integer> hand, Board board, Player player) {
         boolean canPlay = true;
         int playableCards = 0;
 
@@ -58,11 +72,9 @@ public class Player {
 
     /**
      * @brief permet de savoir si un joueur à jouer toutes ses cartes (main et deck)
-     * @param hand la main du joueur
-     * @param deck le deck du joueur
      * @return true si la main ainsi que le deck est vide
      */
-    public boolean checkIfFinished(Hand hand, Deck deck) {
+    public boolean checkIfFinished() {
         return hand.size() == 0 && deck.size() == 0;
     }
 
@@ -89,7 +101,7 @@ public class Player {
      * @brief permet d'obtenir la main du joueur
      * @return la main du joueur
      */
-    public Hand getHand() {
+    public ArrayList<Integer> getHand() {
         return this.hand;
     }
 
@@ -97,7 +109,7 @@ public class Player {
      * @brief permet de mettre à jour la valeur de la pile (attribut privé)
      * @param hand la nouvelle valeur de la main
      */
-    public void setHand(Hand hand){
+    public void setHand(ArrayList<Integer> hand){
         this.hand = hand;
     }
 

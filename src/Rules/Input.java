@@ -1,4 +1,4 @@
-package appli.jeu;
+package Rules;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class Input {
      * @param hand correspond à la main du joueur
      * @return true si toutes les règles de saisie sont valides
      */
-    private static boolean isValid(String card, Hand hand) {
+    private static boolean isValid(String card, ArrayList<Integer> hand) {
         String firstChars = card.substring(0, 2);
         int cardValue = 0;
         try {
@@ -83,14 +83,19 @@ public class Input {
      * @param hand les cartes en main du joueur
      * @return true si toutes les méthodes utilisées renvoient toutes true
      */
-    public static boolean allIsValid(String[] selectionnedCards, Hand hand) {
+    public static boolean allIsValid(String[] selectionnedCards, ArrayList<Integer> hand) {
         boolean allCardsValid = true;
 
         for (String card : selectionnedCards) {
             if (!isValid(card, hand))
                 allCardsValid = false;
         }
-        return selectionnedCards.length <= 6 && selectionnedCards.length >= 1 && Rules.onlyOneEnemyMove(selectionnedCards) && !findIfDuplicates(selectionnedCards) && orderIsValid(selectionnedCards) && allCardsValid;
+        return selectionnedCards.length <= 6
+                && selectionnedCards.length >= 1
+                && Rules.onlyOneEnemyMove(selectionnedCards)
+                && !findIfDuplicates(selectionnedCards)
+                && orderIsValid(selectionnedCards)
+                && allCardsValid;
     }
 
     /**

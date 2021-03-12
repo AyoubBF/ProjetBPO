@@ -1,4 +1,4 @@
-package appli.jeu;
+package jeu;
 
 public class Pile {
     private Player owner;

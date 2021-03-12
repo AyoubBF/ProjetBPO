@@ -1,4 +1,10 @@
-package appli.jeu;
+package Rules;
+
+import jeu.Board;
+import jeu.Pile;
+import jeu.Player;
+
+import java.util.ArrayList;
 
 public class Rules {
     /**
@@ -72,7 +78,7 @@ public class Rules {
      * @param hand la main du joueur
      * @return le nombre de cartes que le joueur doit piocher
      */
-    public static int requiredDraws(String[] selectionnedCards, Hand hand) {
+    public static int requiredDraws(String[] selectionnedCards, ArrayList<Integer> hand) {
         int cardsToDraw = 6 - hand.size();
         return containsEnemyMove(selectionnedCards) ? cardsToDraw : 2;
     }
@@ -91,7 +97,7 @@ public class Rules {
 
         for (Pile pile : piles) {
             String pileOwner = pile.getOwner().getName();
-            isEnemyMove = playerName.equals(pileOwner);
+            isEnemyMove = !playerName.equals(pileOwner);
             boolean isValid = checkIfValid(card, pile, isEnemyMove);
             if (isValid) isPlayable = true;
         }

@@ -1,11 +1,13 @@
-package appli.jeu;
+package jeu;
+
+import java.util.ArrayList;
 
 public class Game {
     private Board board;
     private Player nord;
     private Player sud;
-    private Hand nordHand;
-    private Hand sudHand;
+    private ArrayList<Integer> nordHand;
+    private ArrayList<Integer> sudHand;
     private Deck nordDeck;
     private Deck sudDeck;
 
@@ -76,4 +78,12 @@ public class Game {
         return this.board;
     }
 
+    public Player[] getPlayers(){
+        Player[] players = {nord, sud};
+        return players;
+    }
+
+    public Player getOpponent(Player player){
+        return player.getName() == "NORD" ? sud : nord;
+    }
 }

@@ -1,4 +1,4 @@
-package appli.jeu;
+package jeu;
 
 public class Board {
     private Pile ascendingNord;
@@ -104,5 +104,21 @@ public class Board {
     public Pile[] getAllPiles() {
         Pile[] piles = {this.ascendingNord, this.ascendingSud, this.descendingNord, this.descendingSud};
         return piles;
+    }
+
+    public void setAscendingNord(int value){
+        this.ascendingNord.setActualValue(value);
+    }
+
+    public void setAscendingSud(int value){
+        this.ascendingSud.setActualValue(value);
+    }
+
+    public void setDescendingNord(int value){
+        this.descendingNord.setActualValue(value);
+    }
+
+    public void setDescendingSud(int value){
+        this.descendingSud.setActualValue(value);
     }
 }

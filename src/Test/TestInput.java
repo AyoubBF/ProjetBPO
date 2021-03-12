@@ -1,15 +1,16 @@
-package appli.Test;
+package Test;
 
 import static org.junit.Assert.*;
 
-import appli.jeu.Hand;
-import appli.jeu.Input;
+import Rules.Input;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 public class TestInput {
     @Test
     public void testAllIsValid() {
-        Hand hand = new Hand();
+        ArrayList<Integer> hand = new ArrayList<Integer>();
         hand.add(16);
         hand.add(18);
         hand.add(20);

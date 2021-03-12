@@ -1,12 +1,13 @@
-package appli.Test;
+package Test;
 
 import static org.junit.Assert.*;
 
-import appli.jeu.Board;
-import appli.jeu.Deck;
-import appli.jeu.Hand;
-import appli.jeu.Player;
+import jeu.Board;
+import jeu.Deck;
+import jeu.Player;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class TestPlayer {
     @Test
@@ -14,7 +15,7 @@ public class TestPlayer {
         Player player1 = new Player("NORD");
         Player player2 = new Player("SUD");
         Board board = new Board(player1, player2);
-        Hand hand = player1.getHand();
+        ArrayList<Integer> hand = player1.getHand();
         hand.add(12);
         hand.add(30);
         assertTrue(player1.checkIfCanPlay(hand, board, player1));
@@ -25,14 +26,14 @@ public class TestPlayer {
     @Test
     public void testCheckIfFinished(){
         Player player = new Player("NORD");
-        Hand hand = new Hand();
+        ArrayList<Integer> hand = new ArrayList<Integer>();
         Deck deck = new Deck();
         hand.add(12);
         deck.add(15);
-        assertFalse(player.checkIfFinished(hand, deck));
+        assertFalse(player.checkIfFinished());
         hand.remove(0);
-        assertFalse(player.checkIfFinished(hand, deck));
+        assertFalse(player.checkIfFinished());
         deck.remove(0);
-        assertTrue(player.checkIfFinished(hand, deck));
+        assertTrue(player.checkIfFinished());
     }
 }
