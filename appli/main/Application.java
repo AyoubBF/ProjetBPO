@@ -2,7 +2,6 @@ package appli.main;
 
 import appli.jeu.*;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Application {
@@ -31,7 +30,7 @@ public class Application {
                         int cardValue = Integer.parseInt(card.substring(0, 2));
                         boolean isEnemyMove = Input.checkIfEnemyMove(card);
                         boolean isValidMove = Rules.checkIfValid(cardValue, target, isEnemyMove);
-                        if(isValidMove) {
+                        if (isValidMove) {
                             nord.playCard(cardValue, target);
                             isValidInput = true;
                         }
@@ -55,7 +54,7 @@ public class Application {
                         int cardValue = Integer.parseInt(card.substring(0, 2));
                         boolean isEnemyMove = Input.checkIfEnemyMove(card);
                         boolean isValidMove = Rules.checkIfValid(cardValue, target, isEnemyMove);
-                        if(isValidMove) {
+                        if (isValidMove) {
                             sud.playCard(cardValue, target);
                             isValidInput = true;
                         }

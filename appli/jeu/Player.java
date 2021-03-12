@@ -8,6 +8,10 @@ public class Player {
     private Deck deck;
     private Hand hand;
 
+    /**
+     *
+     * @param name
+     */
     public Player(String name) {
         this.name = name;
         this.deck = new Deck();
@@ -40,6 +44,10 @@ public class Player {
             }
         }
         return canPlay;
+    }
+
+    public boolean isTheWinner(Hand hand, Deck deck) { //###############################################
+        return hand.size() == 0 && deck.size() == 0;
     }
 
     public void playCard(int cardValue, Pile target) {
