@@ -76,13 +76,18 @@ public class Rules {
      * @param board
      * @return
      */
-    public static boolean isPlayable(int card, Board board) {  //################################################
-        boolean isValid = false;
-        if (card > board.getAscendingNord().getActualValue()
-                || card > board.getAscendingSud().getActualValue()
-                || card < board.getDescendingNord().getActualValue()  // Ici c'est faux pcq faudra voir si la carte appartient à nord ou sud pour connaître le signe de la comparaison
-                || card < board.getDescendingSud().getActualValue())  // Et faudra pas oublier les cas avec +10
-            return true;
-        return isValid;
+    public static boolean isPlayable(int card, Board board, Player player) {
+        boolean isPlayable = false;
+        Pile[] piles = board.getAllPiles();
+        String playerName = player.getName();
+        boolean isEnemyMove;
+
+        for (Pile pile : piles) {
+            String pileOwner = pile.getOwner().getName();
+            isEnemyMove = playerName.equals(pileOwner);
+            boolean isValid = checkIfValid(card, pile, isEnemyMove);
+            if (isValid) isPlayable = true;
+        }
+        return isPlayable;
     }
 }

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class Input {
     /**
-     * @param input
-     * @return
+     * @brief découpe une string pour former un tableau de string en fonction
+     * du format de la regex
+     * @param input la saisie de l'utilisateur
+     * @return un tableau de string contenant la découpe
      */
     public static String[] splitString(String input) {
         String[] selectionnedCards = input.split("\\s+");
@@ -13,8 +15,9 @@ public class Input {
     }
 
     /**
-     * @param str
-     * @return
+     * @brief vérifie si la chaîne de caractère est un entier
+     * @param str la chaîne de caractère à vérifier
+     * @return vrai si les caractères sont tous au format numérique
      */
     private static boolean isNumeric(String str) {
         try {
@@ -26,9 +29,10 @@ public class Input {
     }
 
     /**
-     * @param card
-     * @param hand
-     * @return
+     * @brief vérifie la validité de la carte que le joueur s'apprête à poser
+     * @param card correspond à la carte choisie
+     * @param hand correspond à la main du joueur
+     * @return true si toutes les règles de saisie sont valides
      */
     private static boolean isValid(String card, Hand hand) {
         String firstChars = card.substring(0, 2);
@@ -54,8 +58,10 @@ public class Input {
     }
 
     /**
-     * @param selectionnedCards
-     * @return
+     * @brief Vérifie si, lors de la saisie, un joueur tente de poser plus d'une
+     * fois la même carte peu importe les caractères qui suivent les deux digits
+     * @param selectionnedCards la saisie du joueur
+     * @return  false si chaque coup est unique
      */
     private static boolean findIfDuplicates(String[] selectionnedCards) {
         boolean hasDuplicates = false;
@@ -71,9 +77,11 @@ public class Input {
     }
 
     /**
-     * @param selectionnedCards
-     * @param hand
-     * @return
+     * @brief Utilise la méthode isValid, onlyOneEnemyMove, findIfDuplicates &
+     * orderIsValid pour toute la saisie du joueur découpée
+     * @param selectionnedCards saisie du joueur découpée
+     * @param hand les cartes en main du joueur
+     * @return true si toutes les méthodes utilisées renvoient toutes true
      */
     public static boolean allIsValid(String[] selectionnedCards, Hand hand) {
         boolean allCardsValid = true;
@@ -86,8 +94,11 @@ public class Input {
     }
 
     /**
-     * @param arraylist
-     * @return
+     * @brief vérifie si les cartes que le joueur tente de poser suivies du caractère
+     * '^' sont bien ascendantes (pas besoin de vérifier pour le cas où on joue sur
+     * une pile ennemie car on ne peut en saisir qu'une)
+     * @param arraylist la liste des cartes avec le caractère '^'
+     * @return true si l'ordre est ascendant est respecté
      */
     private static boolean isAscending(ArrayList<Integer> arraylist) {
         boolean isSorted = true;
@@ -103,8 +114,10 @@ public class Input {
     }
 
     /**
-     * @param arraylist
-     * @return
+     * @brief vérifie si les cartes que le joueur tente de poser suivies du caractère
+     * 'v' sont bien ascendantes (même parenthèse que pour la méthode isAscending)
+     * @param arraylist la liste des cartes avec le caractère 'v'
+     * @return true si l'ordre est descendant est respecté
      */
     private static boolean isDescending(ArrayList<Integer> arraylist) {
         boolean isSorted = true;
@@ -120,8 +133,10 @@ public class Input {
     }
 
     /**
-     * @param selectionnedCards
-     * @return
+     * @brief vérifie que l'ordre de toutes les cartes selectionnées sont valides
+     * grâce aux méthodes isAscending & isDescending
+     * @param selectionnedCards la chaîne de caractère saisie découpée
+     * @return true si l'ordre est valide
      */
     private static boolean orderIsValid(String[] selectionnedCards) {
         boolean isValid = true;
@@ -148,8 +163,11 @@ public class Input {
     }
 
     /**
-     * @param card
-     * @return
+     * @brief Vérifie s'il s'agit d'un coup ennemi, en effet ici on ne vérifie pas
+     * si le caractère est une apostrophe car cette méthode sert seulement à
+     * vérifier si plus d'un coup ennemi est effectuer
+     * @param card la carte et sa commande qui indique la pile ciblée
+     * @return true s'il s'agit d'un coup ennemi
      */
     public static boolean checkIfEnemyMove(String card) {
         return card.length() == 4 ? true : false;

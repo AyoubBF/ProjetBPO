@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Deck extends ArrayList<Integer> {
     /**
-     * @brief
+     * @brief initialise un deck de 60 cartes
      */
     public void initialize() {
         for (int i = 2; i < 60; i++) {

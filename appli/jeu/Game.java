@@ -10,7 +10,8 @@ public class Game {
     private Deck sudDeck;
 
     /**
-     *
+     * @brief Constructeur pour les joueurs, leurs decks, leurs mains et
+     * le plateau
      */
     public Game() {
         this.nord = new Player("NORD");
@@ -23,7 +24,10 @@ public class Game {
     }
 
     /**
-     * @param player
+     * @brief affiche les 4 piles ainsi que le nombre de cartes en main et
+     * dans la pioche des deux joueurs puis affiche les cartes en main du
+     * joueur qui va jouer
+     * @param player correspond au joueur courant
      */
     public void showState(Player player) {
         int ascendingNordValue = this.board.getAscendingNord().getActualValue();
@@ -41,21 +45,32 @@ public class Game {
     }
 
     /**
-     * @return
+     * @brief affiche le joueur qui a gagné la partie
+     * @param player le vainqueur
+     */
+    public void announceWinner(Player player) {
+        System.out.printf("partie finie, %s a gagné\n", player.getName());
+    }
+
+    /**
+     *@brief permet d'obtenir le joueur Nord
+     *@return le joueur Nord
      */
     public Player getNord() {
         return this.nord;
     }
 
     /**
-     * @return
+     * @brief permet d'obtenir le joueur Sud
+     * @return le joueur Sud
      */
     public Player getSud() {
         return this.sud;
     }
 
     /**
-     * @return
+     * @brief permet d'obtenir les valeurs des piles du plateau
+     * @return le plateau
      */
     public Board getBoard() {
         return this.board;

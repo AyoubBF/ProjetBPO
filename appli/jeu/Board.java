@@ -7,8 +7,9 @@ public class Board {
     private Pile descendingSud;
 
     /**
-     * @param nord
-     * @param sud
+     * @brief Constructeur pour les piles ascendantes et descendantes des joueurs Nord et Sud
+     * @param nord correspond au joueur Nord
+     * @param sud correspond au joueur Sud
      */
     public Board(Player nord, Player sud) {
         ascendingNord = new Pile(nord, 1, "asc");
@@ -17,10 +18,12 @@ public class Board {
         descendingSud = new Pile(sud, 60, "desc");
     }
 
+
     /**
-     * @param playerName
-     * @param targetCode
-     * @return
+     * @brief permet de donner le point de vue des piles en fonction du joueur fourni
+     * @param playerName le nom du joueur
+     * @param targetCode les caractères qui montrent la pile que vise le joueur
+     * @return  renvoie la pile que vise le joueur
      */
     public Pile getTarget(String playerName, String targetCode) {
         String direction;
@@ -63,30 +66,43 @@ public class Board {
     }
 
     /**
-     * @return
+     * @brief permet d'accéder la valeur privée de la pile ascendante Nord
+     * @return la valeur de la pile ascendante Nord
      */
     public Pile getAscendingNord() {
         return this.ascendingNord;
     }
 
     /**
-     * @return
+     * @brief permet d'accéder la valeur privée de la pile descendante Nord
+     * @return la valeur de la pile descendante Nord
      */
     public Pile getDescendingNord() {
         return this.descendingNord;
     }
 
     /**
-     * @return
+     * @brief permet d'accéder la valeur privée de la pile ascendante Sud
+     * @return la valeur de la pile ascendante Sud
      */
     public Pile getAscendingSud() {
         return this.ascendingSud;
     }
 
     /**
-     * @return
+     * @brief permet d'accéder la valeur privée de la pile descendante Sud
+     * @return la valeur de la pile descendante Sud
      */
     public Pile getDescendingSud() {
         return this.descendingSud;
+    }
+
+    /**
+     * @brief permet de récupérer les valeurs privées de toutes les piles
+     * @return un tableau de type Pile contenant les quatres piles
+     */
+    public Pile[] getAllPiles() {
+        Pile[] piles = {this.ascendingNord, this.ascendingSud, this.descendingNord, this.descendingSud};
+        return piles;
     }
 }

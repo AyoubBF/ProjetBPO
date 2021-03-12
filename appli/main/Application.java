@@ -20,6 +20,16 @@ public class Application {
 
         while (!isGameOver) {
             game.showState(nord);
+            boolean sudFinished = sud.checkIfFinished(sud.getHand(), sud.getDeck());
+            if(sudFinished){
+                game.announceWinner(sud);
+                System.exit(0);
+            }
+            boolean nordCanPlay = nord.checkIfCanPlay(nord.getHand(), board, nord);
+            if(!nordCanPlay) {
+                game.announceWinner(sud);
+                System.exit(0);
+            }
             System.out.print("> ");
             while (!isValidInput) {
                 input = sc.nextLine();
@@ -43,6 +53,16 @@ public class Application {
                 }
             }
             game.showState(sud);
+            boolean nordFinished = nord.checkIfFinished(nord.getHand(), nord.getDeck());
+            if(nordFinished){
+                game.announceWinner(nord);
+                System.exit(0);
+            }
+            boolean sudCanPlay = sud.checkIfCanPlay(sud.getHand(), board, sud);
+            if(!sudCanPlay) {
+                game.announceWinner(nord);
+                System.exit(0);
+            }
             isValidInput = false;
             System.out.print("> ");
             while (!isValidInput) {

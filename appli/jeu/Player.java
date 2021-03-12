@@ -1,6 +1,5 @@
 package appli.jeu;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class Player {
@@ -27,7 +26,7 @@ public class Player {
         Collections.sort(this.hand);
     }
 
-    public boolean checkIfCanPlay(Hand hand, Board board) {
+    public boolean checkIfCanPlay(Hand hand, Board board, Player player) {
         boolean canPlay = true;
         int playableCards = 0;
 
@@ -36,7 +35,7 @@ public class Player {
         }
 
         for (int card : hand) {
-            if (Rules.isPlayable(card, board)) {
+            if (Rules.isPlayable(card, board, player)) {
                 playableCards++;
             }
             if (playableCards >= 2) {
@@ -46,7 +45,7 @@ public class Player {
         return canPlay;
     }
 
-    public boolean isTheWinner(Hand hand, Deck deck) { //###############################################
+    public boolean checkIfFinished(Hand hand, Deck deck) {
         return hand.size() == 0 && deck.size() == 0;
     }
 
@@ -62,6 +61,10 @@ public class Player {
 
     public Hand getHand() {
         return this.hand;
+    }
+
+    public void setHand(Hand hand){
+        this.hand = hand;
     }
 
     public String getName() {
