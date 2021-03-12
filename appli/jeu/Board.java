@@ -8,8 +8,8 @@ public class Board {
 
     /**
      * @brief Constructeur pour les piles ascendantes et descendantes des joueurs Nord et Sud
-     * @param nord correspond au joueur Nord
-     * @param sud correspond au joueur Sud
+     * @param nord le joueur Nord
+     * @param sud le joueur Sud
      */
     public Board(Player nord, Player sud) {
         ascendingNord = new Pile(nord, 1, "asc");
@@ -23,7 +23,7 @@ public class Board {
      * @brief permet de donner le point de vue des piles en fonction du joueur fourni
      * @param playerName le nom du joueur
      * @param targetCode les caractères qui montrent la pile que vise le joueur
-     * @return  renvoie la pile que vise le joueur
+     * @return renvoie la pile que vise le joueur
      */
     public Pile getTarget(String playerName, String targetCode) {
         String direction;
